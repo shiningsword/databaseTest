@@ -17,15 +17,16 @@ namespace DatabaseTW.Models
             // Add custom user claims here
             return userIdentity;
         }
-        public virtual UserInfo Info { get; set; }
-        public virtual List<Request> Reqeusts { get; set; }
-        public virtual List<Transaction> Transactions { get; set; }
+ //       public virtual UserInfo Info { get; set; }
+//        public virtual List<Request> Reqeusts { get; set; }
+//        public virtual List<Transaction> Transactions { get; set; }
 
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<UserInfo> UserInfo { get; set; }
+        //public DbSet<ApplicationUser> Users { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
@@ -40,8 +41,5 @@ namespace DatabaseTW.Models
 
         public System.Data.Entity.DbSet<DatabaseTW.Models.Transaction> Transactions { get; set; }
 
-        public System.Data.Entity.DbSet<DatabaseTW.Models.ApplicationUser> ApplicationUsers { get; set; }
-
-     //   public System.Data.Entity.DbSet<DatabaseTW.Models.ApplicationUser> ApplicationUsers { get; set; }
-    }
+     }
 }

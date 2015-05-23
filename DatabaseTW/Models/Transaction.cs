@@ -12,13 +12,13 @@ namespace DatabaseTW.Models
         public string RecipientUserName { get; set; }
         public string SenderUserName { get; set; }
         public string Message { get; set; }
-        public CurrencyAmount Amount { get; set; }
+        //public CurrencyAmount Amount { get; set; }
         public string SenderUserId { get; set; }
         public string RecipientUserId { get; set; }
 
-        [ForeignKey("SenderUserId")]
-        virtual public ApplicationUser SenderUser { get; set; }
-        [ForeignKey("RecipientUserId")]
-        virtual public ApplicationUser RecipientUser { get; set; }        
+        //[ForeignKey("SenderUserId")]
+        //virtual public ApplicationUser SenderUser { get; set; }
+        //[ForeignKey("RecipientUserId")]
+        //virtual public ApplicationUser RecipientUser { get; set; }        
     }
 }

@@ -17,8 +17,8 @@ namespace DatabaseTW.Models
         public bool NeedEscrow { get; set; }
         public string UserId { get; set; }
 
-        [ForeignKey("UserId")]
-        public virtual ApplicationUser User { get; set; }
+        //[ForeignKey("UserId")]
+        //public virtual ApplicationUser User { get; set; }
     }
 
     public enum ExchangeRateMode
@@ -27,7 +27,7 @@ namespace DatabaseTW.Models
         RateOnTrasanctionTime
     }
 
-    public class CurrencyAmount
+    public struct CurrencyAmount
     {
         public double Amount;
         public CurrencyType Type;

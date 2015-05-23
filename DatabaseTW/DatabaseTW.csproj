@@ -16,7 +16,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44303</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -214,6 +214,30 @@
     <Compile Include="Migrations\201505221031010_transactions.Designer.cs">
       <DependentUpon>201505221031010_transactions.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505230422403_database.cs" />
+    <Compile Include="Migrations\201505230422403_database.Designer.cs">
+      <DependentUpon>201505230422403_database.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505230442013_database2.cs" />
+    <Compile Include="Migrations\201505230442013_database2.Designer.cs">
+      <DependentUpon>201505230442013_database2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505230505147_database3.cs" />
+    <Compile Include="Migrations\201505230505147_database3.Designer.cs">
+      <DependentUpon>201505230505147_database3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505230514038_database4.cs" />
+    <Compile Include="Migrations\201505230514038_database4.Designer.cs">
+      <DependentUpon>201505230514038_database4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505231639161_userInfo_fk.cs" />
+    <Compile Include="Migrations\201505231639161_userInfo_fk.Designer.cs">
+      <DependentUpon>201505231639161_userInfo_fk.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505231719072_useIDkey.cs" />
+    <Compile Include="Migrations\201505231719072_useIDkey.Designer.cs">
+      <DependentUpon>201505231719072_useIDkey.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -318,6 +342,24 @@
     <EmbeddedResource Include="Migrations\201505221031010_transactions.resx">
       <DependentUpon>201505221031010_transactions.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505230422403_database.resx">
+      <DependentUpon>201505230422403_database.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505230442013_database2.resx">
+      <DependentUpon>201505230442013_database2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505230505147_database3.resx">
+      <DependentUpon>201505230505147_database3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505230514038_database4.resx">
+      <DependentUpon>201505230514038_database4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505231639161_userInfo_fk.resx">
+      <DependentUpon>201505231639161_userInfo_fk.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505231719072_useIDkey.resx">
+      <DependentUpon>201505231719072_useIDkey.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -340,11 +382,10 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>65006</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:65006/</IISUrl>
+          <IISUrl>https://localhost:44303/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
+          <CustomServerUrl>https://localhost:44303/</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

@@ -17,7 +17,7 @@ namespace DatabaseTW.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        private ApplicationDbContext db = new ApplicationDbContext();
         public AccountController()
         {
         }
@@ -79,6 +79,7 @@ namespace DatabaseTW.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    Session["userID"] = model.Email;
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -163,7 +164,7 @@ namespace DatabaseTW.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home", new {userID = user.Id });
                 }
                 AddErrors(result);
             }
@@ -327,7 +328,7 @@ namespace DatabaseTW.Controllers
             {
                 return RedirectToAction("Login");
             }
-
+            Session["userID"] = loginInfo.Email;
             // Sign in the user with this external login provider if the user already has a login
             var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
             switch (result)
@@ -358,7 +359,7 @@ namespace DatabaseTW.Controllers
             {
                 return RedirectToAction("Index", "Manage");
             }
-
+            Session["userID"] = model.Email;
             if (ModelState.IsValid)
             {
                 // Get the information about the user from the external login provider
@@ -369,6 +370,7 @@ namespace DatabaseTW.Controllers
                 }
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user);
+
                 if (result.Succeeded)
                 {
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
@@ -445,11 +447,21 @@ namespace DatabaseTW.Controllers
 
         private ActionResult RedirectToLocal(string returnUrl)
         {
-            if (Url.IsLocalUrl(returnUrl))
+
+            
+            if(Session["userID"] == null)
             {
-                return Redirect(returnUrl);
+                //SESSION EXPIRED
+                AuthenticationManager.SignOut();
+                return RedirectToAction("Index", "Home");
             }
-            return RedirectToAction("Index", "Home");
+            var userinfo = db.UserInfo.Find(Session["userID"]); 
+            if(userinfo == null)
+            {
+                return RedirectToAction("Create", "UserInfoes");
+            }
+            return RedirectToAction("Index", "UserInfoes");
+            //return RedirectToAction("Index", "Requests");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

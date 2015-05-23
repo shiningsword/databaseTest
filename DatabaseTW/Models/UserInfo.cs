@@ -9,6 +9,7 @@ namespace DatabaseTW.Models
 {
     public class UserInfo
     {
+        //public int Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
@@ -18,10 +19,11 @@ namespace DatabaseTW.Models
         public string Email { get; set; }
         public string Mobile { get; set; }
         public string Wechat { get; set; }
-        [Key, ForeignKey("User")]
+        //[Key, ForeignKey("User")]
+        [Key]
         public string UserId { get; set; }
 
-        public virtual ApplicationUser User { get; set; }
+        //public virtual ApplicationUser User { get; set; }
 
 
     }

@@ -13,12 +13,13 @@ namespace DatabaseTW.Controllers
     public class UserInfoesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
+ 
         // GET: UserInfoes
         public ActionResult Index()
         {
-            var userInfo = db.UserInfo.Include(u => u.User);
-            return View(userInfo.ToList());
+            var userInfo = db.UserInfo.Find(Session["userID"]);
+            //return View(userInfo.ToList());
+            return View(userInfo);
         }
 
         // GET: UserInfoes/Details/5
@@ -37,7 +38,7 @@ namespace DatabaseTW.Controllers
         }
 
         // GET: UserInfoes/Create
-        public ActionResult Create()
+        public ActionResult Create(string userID)
         {
             //ViewBag.UserId = new SelectList(db.ApplicationUsers, "Id", "Email");
             return View();
@@ -50,6 +51,13 @@ namespace DatabaseTW.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "UserId,Name,Address,City,State,Zip,Email,Mobile,Wechat")] UserInfo userInfo)
         {
+            var userID = Session["userID"];
+            if(userID == null)
+            {
+                RedirectToAction("LogOff", "AccountController");
+            }
+
+            userInfo.UserId = (string)userID;
             if (ModelState.IsValid)
             {
                 db.UserInfo.Add(userInfo);
@@ -62,8 +70,14 @@ namespace DatabaseTW.Controllers
         }
 
         // GET: UserInfoes/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit()
         {
+            var id = Session["userID"];
+            if (id == null)
+            {
+                RedirectToAction("LogOff", "AccountController");
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -73,7 +87,6 @@ namespace DatabaseTW.Controllers
             {
                 return HttpNotFound();
             }
-            //ViewBag.UserId = new SelectList(db.ApplicationUsers, "Id", "Email", userInfo.UserId);
             return View(userInfo);
         }
 

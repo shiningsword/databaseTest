@@ -15,9 +15,9 @@ namespace DatabaseTW.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Transactions
-        public ActionResult Index()
+        public ActionResult Index(string userId)
         {
-            var transactions = db.Transactions.Include(t => t.RecipientUser).Include(t => t.SenderUser);
+            var transactions = db.Transactions.Where(t => t.SenderUserId == userId || t.RecipientUserId == userId);
             return View(transactions.ToList());
         }
 
@@ -39,8 +39,8 @@ namespace DatabaseTW.Controllers
         // GET: Transactions/Create
         public ActionResult Create()
         {
-            ViewBag.RecipientUserId = new SelectList(db.ApplicationUsers, "Id", "Email");
-            ViewBag.SenderUserId = new SelectList(db.ApplicationUsers, "Id", "Email");
+            //ViewBag.RecipientUserId = new SelectList(db.ApplicationUsers, "Id", "Email");
+            //ViewBag.SenderUserId = new SelectList(db.ApplicationUsers, "Id", "Email");
             return View();
         }
 
@@ -58,8 +58,8 @@ namespace DatabaseTW.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.RecipientUserId = new SelectList(db.ApplicationUsers, "Id", "Email", transaction.RecipientUserId);
-            ViewBag.SenderUserId = new SelectList(db.ApplicationUsers, "Id", "Email", transaction.SenderUserId);
+           // ViewBag.RecipientUserId = new SelectList(db.ApplicationUsers, "Id", "Email", transaction.RecipientUserId);
+           // ViewBag.SenderUserId = new SelectList(db.ApplicationUsers, "Id", "Email", transaction.SenderUserId);
             return View(transaction);
         }
 
@@ -75,8 +75,8 @@ namespace DatabaseTW.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.RecipientUserId = new SelectList(db.ApplicationUsers, "Id", "Email", transaction.RecipientUserId);
-            ViewBag.SenderUserId = new SelectList(db.ApplicationUsers, "Id", "Email", transaction.SenderUserId);
+            //ViewBag.RecipientUserId = new SelectList(db.ApplicationUsers, "Id", "Email", transaction.RecipientUserId);
+            //ViewBag.SenderUserId = new SelectList(db.ApplicationUsers, "Id", "Email", transaction.SenderUserId);
             return View(transaction);
         }
 
@@ -93,8 +93,8 @@ namespace DatabaseTW.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.RecipientUserId = new SelectList(db.ApplicationUsers, "Id", "Email", transaction.RecipientUserId);
-            ViewBag.SenderUserId = new SelectList(db.ApplicationUsers, "Id", "Email", transaction.SenderUserId);
+            //ViewBag.RecipientUserId = new SelectList(db.ApplicationUsers, "Id", "Email", transaction.RecipientUserId);
+            //ViewBag.SenderUserId = new SelectList(db.ApplicationUsers, "Id", "Email", transaction.SenderUserId);
             return View(transaction);
         }
 

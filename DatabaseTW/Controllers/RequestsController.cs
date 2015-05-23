@@ -17,8 +17,8 @@ namespace DatabaseTW.Controllers
         // GET: Requests
         public ActionResult Index()
         {
-            var requests = db.Requests.Include(r => r.User);
-            return View(requests.ToList());
+            //var requests = db.Requests.Where(r => r.UserId ==);
+            return View(db.Requests.ToList());
         }
 
         // GET: Requests/Details/5
@@ -39,7 +39,7 @@ namespace DatabaseTW.Controllers
         // GET: Requests/Create
         public ActionResult Create()
         {
-            //ViewBag.UserId = new SelectList(db.ApplicationUsers, "Id", "Email");
+           // ViewBag.UserId = new SelectList(db.ApplicationUsers, "Id", "Email");
             return View();
         }
 
