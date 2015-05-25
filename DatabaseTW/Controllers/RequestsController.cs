@@ -17,6 +17,13 @@ namespace DatabaseTW.Controllers
         // GET: Requests
         public ActionResult Index()
         {
+            var id = Session["userID"];
+            if (id == null)
+            {
+                RedirectToAction("LogOff", "AccountController");
+            }
+            ViewBag.currentUser = (string)id;
+
             //var requests = db.Requests.Where(r => r.UserId ==);
             return View(db.Requests.ToList());
         }
@@ -39,7 +46,10 @@ namespace DatabaseTW.Controllers
         // GET: Requests/Create
         public ActionResult Create()
         {
-           // ViewBag.UserId = new SelectList(db.ApplicationUsers, "Id", "Email");
+            if (Session["userID"] == null)
+            {
+                RedirectToAction("LogOff", "AccountController");
+            }
             return View();
         }
 
@@ -48,16 +58,21 @@ namespace DatabaseTW.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "RequestID,Message,AmountMin,AmountMax,ExpirationDate,ExchangeMode,NeedEscrow,UserId")] Request request)
+        public ActionResult Create([Bind(Include = "RequestID,Message,AmountMin,AmountMax,Currency,ExpirationDate,ExchangeMode,NeedEscrow")] Request request)
         {
             if (ModelState.IsValid)
             {
+                var userId = Session["userID"];
+                if (userId == null)
+                {
+                    RedirectToAction("LogOff", "AccountController");
+                }
+                request.UserId = (string)userId;
                 db.Requests.Add(request);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            //ViewBag.UserId = new SelectList(db.ApplicationUsers, "Id", "Email", request.UserId);
             return View(request);
         }
 
@@ -82,7 +97,7 @@ namespace DatabaseTW.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "RequestID,Message,AmountMin,AmountMax,ExpirationDate,ExchangeMode,NeedEscrow,UserId")] Request request)
+        public ActionResult Edit([Bind(Include = "RequestID,Message,AmountMin,AmountMax,Currency, ExpirationDate,ExchangeMode,NeedEscrow,UserId")] Request request)
         {
             if (ModelState.IsValid)
             {

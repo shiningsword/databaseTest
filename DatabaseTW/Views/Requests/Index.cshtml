@@ -12,16 +12,16 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.User.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Message)
+            @Html.DisplayNameFor(model => model.UserId)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.AmountMin)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.AmountMax)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Currency)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.ExpirationDate)
@@ -32,16 +32,16 @@
         <th>
             @Html.DisplayNameFor(model => model.NeedEscrow)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Message)
+        </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.User.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Message)
+            @Html.DisplayFor(modelItem => item.UserId)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.AmountMin)
@@ -49,6 +49,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.AmountMax)
         </td>
+        <th>
+            @Html.DisplayFor(modelItem => item.Currency)
+        </th>
         <td>
             @Html.DisplayFor(modelItem => item.ExpirationDate)
         </td>
@@ -59,10 +62,24 @@
             @Html.DisplayFor(modelItem => item.NeedEscrow)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.RequestID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.RequestID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.RequestID })
+            @Html.DisplayFor(modelItem => item.Message)
         </td>
+
+        @if (ViewBag.currentUser == item.UserId){
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.RequestID }) |
+                @Html.ActionLink("Details", "Details", new { id=item.RequestID }) |
+                @Html.ActionLink("Close", "Close", new { id = item.RequestID }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.RequestID })
+            </td>
+        }
+        else
+        {
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.RequestID }) |
+            </td>
+        }
+    
     </tr>
 }
 

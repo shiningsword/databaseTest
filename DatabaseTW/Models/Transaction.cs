@@ -15,6 +15,10 @@ namespace DatabaseTW.Models
         //public CurrencyAmount Amount { get; set; }
         public string SenderUserId { get; set; }
         public string RecipientUserId { get; set; }
+        public double TransactionAmount { get; set; }
+        public CurrencyType Currency { get; set; }
+      
+
 
         //[ForeignKey("SenderUserId")]
         //virtual public ApplicationUser SenderUser { get; set; }

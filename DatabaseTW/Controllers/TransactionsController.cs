@@ -15,8 +15,13 @@ namespace DatabaseTW.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Transactions
-        public ActionResult Index(string userId)
+        public ActionResult Index()
         {
+            var userId = Session["userID"];
+            if (userId == null)
+            {
+                RedirectToAction("LogOff", "AccountController");
+            }
             var transactions = db.Transactions.Where(t => t.SenderUserId == userId || t.RecipientUserId == userId);
             return View(transactions.ToList());
         }

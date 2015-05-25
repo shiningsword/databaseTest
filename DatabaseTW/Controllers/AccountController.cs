@@ -393,6 +393,7 @@ namespace DatabaseTW.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+            Session.Clear();
             AuthenticationManager.SignOut();
             return RedirectToAction("Index", "Home");
         }
@@ -446,21 +447,24 @@ namespace DatabaseTW.Controllers
         }
 
         private ActionResult RedirectToLocal(string returnUrl)
-        {
-
-            
+        {        
             if(Session["userID"] == null)
             {
-                //SESSION EXPIRED
-                AuthenticationManager.SignOut();
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login");
             }
+
             var userinfo = db.UserInfo.Find(Session["userID"]); 
             if(userinfo == null)
             {
                 return RedirectToAction("Create", "UserInfoes");
             }
-            return RedirectToAction("Index", "UserInfoes");
+            
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+
+            return RedirectToAction("Index", "Requests");
             //return RedirectToAction("Index", "Requests");
         }
 

@@ -10,8 +10,9 @@ namespace DatabaseTW.Models
     {
         public int RequestID { get; set; }
         public string Message { get; set; }
-        public CurrencyAmount AmountMin { get; set; }
-        public CurrencyAmount AmountMax { get; set; }
+        public double AmountMin { get; set; }
+        public double AmountMax { get; set; }
+        public CurrencyType Currency { get; set; }
         public DateTime ExpirationDate { get; set; }
         public ExchangeRateMode ExchangeMode { get; set; }
         public bool NeedEscrow { get; set; }
@@ -25,12 +26,6 @@ namespace DatabaseTW.Models
     {
         CurrentRate,
         RateOnTrasanctionTime
-    }
-
-    public struct CurrencyAmount
-    {
-        public double Amount;
-        public CurrencyType Type;
     }
 
     public enum CurrencyType
