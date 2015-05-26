@@ -17,13 +17,14 @@ namespace DatabaseTW.Controllers
         // GET: Transactions
         public ActionResult Index()
         {
-            var userId = Session["userID"];
-            if (userId == null)
+            var id = Session["userID"];
+            if (id == null)
             {
                 RedirectToAction("LogOff", "AccountController");
             }
-            var transactions = db.Transactions.Where(t => t.SenderUserId == userId || t.RecipientUserId == userId);
-            return View(transactions.ToList());
+            var myTransactions = db.Transactions.Where(r => (r.RecipientUserId == id ||
+                r.SenderUserId == id));
+            return View(myTransactions.ToList());
         }
 
         // GET: Transactions/Details/5
@@ -42,10 +43,9 @@ namespace DatabaseTW.Controllers
         }
 
         // GET: Transactions/Create
-        public ActionResult Create()
+        public ActionResult Create(Request req)
         {
-            //ViewBag.RecipientUserId = new SelectList(db.ApplicationUsers, "Id", "Email");
-            //ViewBag.SenderUserId = new SelectList(db.ApplicationUsers, "Id", "Email");
+            Session["CloseRequestID"] = req.RequestID;
             return View();
         }
 
@@ -54,17 +54,31 @@ namespace DatabaseTW.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TransactionId,RecipientUserName,SenderUserName,Message,Amount,SenderUserId,RecipientUserId")] Transaction transaction)
+        public ActionResult Create([Bind(Include = "TransactionId,RecipientName,Message,RecipientUserId,AmountSend,CurrencySend,AmountReceived,CurrencyRecieved")] Transaction transaction)
         {
+            var reqId = Session["CloseRequestID"];
+            Session["CloseRequestID"] = null;
             if (ModelState.IsValid)
             {
+                var userId = Session["userID"];
+                if (userId == null)
+                {
+                    RedirectToAction("LogOff", "AccountController");
+                }
+                transaction.SenderUserId = (string)userId;
+                var senderInfo = db.UserInfo.Find(userId);
+                transaction.SenderName = senderInfo.Name;
+                var receipientInfo = db.UserInfo.Find(transaction.RecipientUserId);
+                if(receipientInfo == null)
+                {
+                    throw new Exception("unexpected userID");
+                }
+                db.Requests.Remove(db.Requests.Find(reqId));
                 db.Transactions.Add(transaction);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-           // ViewBag.RecipientUserId = new SelectList(db.ApplicationUsers, "Id", "Email", transaction.RecipientUserId);
-           // ViewBag.SenderUserId = new SelectList(db.ApplicationUsers, "Id", "Email", transaction.SenderUserId);
             return View(transaction);
         }
 
@@ -80,8 +94,6 @@ namespace DatabaseTW.Controllers
             {
                 return HttpNotFound();
             }
-            //ViewBag.RecipientUserId = new SelectList(db.ApplicationUsers, "Id", "Email", transaction.RecipientUserId);
-            //ViewBag.SenderUserId = new SelectList(db.ApplicationUsers, "Id", "Email", transaction.SenderUserId);
             return View(transaction);
         }
 
@@ -90,7 +102,7 @@ namespace DatabaseTW.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TransactionId,RecipientUserName,SenderUserName,Message,Amount,SenderUserId,RecipientUserId")] Transaction transaction)
+        public ActionResult Edit([Bind(Include = "TransactionId,RecipientName,SenderName,Message,SenderUserId,RecipientUserId,AmountSend,CurrencySend,AmountReceived,CurrencyRecieved")] Transaction transaction)
         {
             if (ModelState.IsValid)
             {
@@ -98,8 +110,6 @@ namespace DatabaseTW.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            //ViewBag.RecipientUserId = new SelectList(db.ApplicationUsers, "Id", "Email", transaction.RecipientUserId);
-            //ViewBag.SenderUserId = new SelectList(db.ApplicationUsers, "Id", "Email", transaction.SenderUserId);
             return View(transaction);
         }
 

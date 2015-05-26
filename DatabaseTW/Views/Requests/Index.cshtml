@@ -7,7 +7,15 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create") |
+@if(ViewBag.myRequests)
+{ 
+    @Html.ActionLink("View all Requests", "Index")
+}
+else
+{
+    @Html.ActionLink("View My Requests", "MyRequests")
+}
 </p>
 <table class="table">
     <tr>

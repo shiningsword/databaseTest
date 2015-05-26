@@ -242,6 +242,14 @@
     <Compile Include="Migrations\201505241938382_amount.Designer.cs">
       <DependentUpon>201505241938382_amount.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505250051525_Transactions2.cs" />
+    <Compile Include="Migrations\201505250051525_Transactions2.Designer.cs">
+      <DependentUpon>201505250051525_Transactions2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505252101442_Transactions3.cs" />
+    <Compile Include="Migrations\201505252101442_Transactions3.Designer.cs">
+      <DependentUpon>201505252101442_Transactions3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -367,6 +375,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505241938382_amount.resx">
       <DependentUpon>201505241938382_amount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505250051525_Transactions2.resx">
+      <DependentUpon>201505250051525_Transactions2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505252101442_Transactions3.resx">
+      <DependentUpon>201505252101442_Transactions3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

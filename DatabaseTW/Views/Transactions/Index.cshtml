@@ -7,27 +7,36 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("View My Requests", "MyRequests", "Requests")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.RecipientUser.Email)
+            @Html.DisplayNameFor(model => model.RecipientName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SenderUser.Email)
+            @Html.DisplayNameFor(model => model.SenderName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RecipientUserName)
+            @Html.DisplayNameFor(model => model.SenderUserId)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SenderUserName)
+            @Html.DisplayNameFor(model => model.RecipientUserId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AmountSend)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CurrencySend)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AmountReceived)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CurrencyRecieved)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Message)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Amount)
         </th>
         <th></th>
     </tr>
@@ -35,22 +44,31 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.RecipientUser.Email)
+            @Html.DisplayFor(modelItem => item.RecipientName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.SenderUser.Email)
+            @Html.DisplayFor(modelItem => item.SenderName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.RecipientUserName)
+            @Html.DisplayFor(modelItem => item.SenderUserId)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.SenderUserName)
+            @Html.DisplayFor(modelItem => item.RecipientUserId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AmountSend)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CurrencySend)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AmountReceived)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CurrencyRecieved)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Message)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Amount)
         </td>
         <td>
             @*@Html.ActionLink("Edit", "Edit", new { id=item.TransactionId }) |

@@ -23,9 +23,23 @@ namespace DatabaseTW.Controllers
                 RedirectToAction("LogOff", "AccountController");
             }
             ViewBag.currentUser = (string)id;
-
+            ViewBag.myRequests = false;
             //var requests = db.Requests.Where(r => r.UserId ==);
             return View(db.Requests.ToList());
+        }
+
+        // GET: Requests
+        public ActionResult MyRequests()
+        {
+            var id = Session["userID"];
+            if (id == null)
+            {
+                RedirectToAction("LogOff", "AccountController");
+            }
+            ViewBag.currentUser = (string)id;
+            ViewBag.myRequests = true;
+            var requests = db.Requests.Where(r => r.UserId == id);
+            return View("Index", requests);
         }
 
         // GET: Requests/Details/5
@@ -122,6 +136,21 @@ namespace DatabaseTW.Controllers
                 return HttpNotFound();
             }
             return View(request);
+        }
+
+        // GET: Requests/Delete/5
+        public ActionResult Close(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Request request = db.Requests.Find(id);
+            if (request == null)
+            {
+                return HttpNotFound();
+            }
+            return RedirectToAction("Create","Transactions", request);
         }
 
         // POST: Requests/Delete/5
