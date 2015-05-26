@@ -20,7 +20,7 @@ namespace DatabaseTW.Controllers
             var id = Session["userID"];
             if (id == null)
             {
-                RedirectToAction("LogOff", "AccountController");
+                return RedirectToAction("LogOff", "AccountController");
             }
             ViewBag.currentUser = (string)id;
             ViewBag.myRequests = false;
@@ -34,7 +34,7 @@ namespace DatabaseTW.Controllers
             var id = Session["userID"];
             if (id == null)
             {
-                RedirectToAction("LogOff", "AccountController");
+                return RedirectToAction("LogOff", "AccountController");
             }
             ViewBag.currentUser = (string)id;
             ViewBag.myRequests = true;
@@ -62,7 +62,7 @@ namespace DatabaseTW.Controllers
         {
             if (Session["userID"] == null)
             {
-                RedirectToAction("LogOff", "AccountController");
+                return RedirectToAction("LogOff", "AccountController");
             }
             return View();
         }
@@ -79,7 +79,7 @@ namespace DatabaseTW.Controllers
                 var userId = Session["userID"];
                 if (userId == null)
                 {
-                    RedirectToAction("LogOff", "AccountController");
+                    return RedirectToAction("LogOff", "AccountController");
                 }
                 request.UserId = (string)userId;
                 db.Requests.Add(request);

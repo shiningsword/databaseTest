@@ -49,12 +49,12 @@ namespace DatabaseTW.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserId,Name,Address,City,State,Zip,Email,Mobile,Wechat")] UserInfo userInfo)
+        public ActionResult Create([Bind(Include = "UserId,Name,Address,City,State,Zip,Country,Email,Mobile,Wechat")] UserInfo userInfo)
         {
             var userID = Session["userID"];
             if(userID == null)
             {
-                RedirectToAction("LogOff", "AccountController");
+                return RedirectToAction("LogOff", "AccountController");
             }
 
             userInfo.UserId = (string)userID;
@@ -75,7 +75,7 @@ namespace DatabaseTW.Controllers
             var id = Session["userID"];
             if (id == null)
             {
-                RedirectToAction("LogOff", "AccountController");
+                return RedirectToAction("LogOff", "AccountController");
             }
 
             if (id == null)
@@ -95,7 +95,7 @@ namespace DatabaseTW.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserId,Name,Address,City,State,Zip,Email,Mobile,Wechat")] UserInfo userInfo)
+        public ActionResult Edit([Bind(Include = "UserId,Name,Address,City,State,Zip,Country,Email,Mobile,Wechat")] UserInfo userInfo)
         {
             if (ModelState.IsValid)
             {
