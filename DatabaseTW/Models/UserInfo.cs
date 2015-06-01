@@ -23,7 +23,7 @@ namespace DatabaseTW.Models
         [Key]
         public string UserId { get; set; }
 
-        //public virtual ApplicationUser User { get; set; }
+        public virtual List<Request> requests { get; set; }
 
 
     }

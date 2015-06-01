@@ -258,6 +258,10 @@
     <Compile Include="Migrations\201505290503089_request2.Designer.cs">
       <DependentUpon>201505290503089_request2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506010513559_user_request_link.cs" />
+    <Compile Include="Migrations\201506010513559_user_request_link.Designer.cs">
+      <DependentUpon>201506010513559_user_request_link.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -395,6 +399,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505290503089_request2.resx">
       <DependentUpon>201505290503089_request2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506010513559_user_request_link.resx">
+      <DependentUpon>201506010513559_user_request_link.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

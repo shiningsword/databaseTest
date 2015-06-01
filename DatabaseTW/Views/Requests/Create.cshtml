@@ -82,7 +82,6 @@
             </div>
         </div>
 
-        @if (ViewBag.isCreate) { 
         <div class="form-group">
             @Html.LabelFor(model => model.Message, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -90,7 +89,6 @@
                 @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
             </div>
         </div>
-        }
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

@@ -104,13 +104,21 @@ namespace DatabaseTW.Controllers
                 {
                     return RedirectToAction("Login", "AccountController");
                 }
-                var result = db.Requests.Where(r => 
+                var query = db.Requests.Where(r => 
                     r.Currency == request.Currency &&
                     !(r.AmountMax < request.AmountMin || r.AmountMin > request.AmountMax));
-                
+                if(request.CompanyDomain != null)
+                {
+                    query = query.Where(r => r.UserId.IndexOf(request.CompanyDomain, StringComparison.OrdinalIgnoreCase) != 0);
+                }
+                if (request.CloseToZipcode != 0)
+                {
+                    query = query.Where(r => Math.Abs(r.User.Zip - request.CloseToZipcode) < 100);
+                }
+
                 ViewBag.myRequests = false;
                 ViewBag.currentUser = (string)userId;
-                return View("Index", result);
+                return View("Index", query);
             }
 
             return View(request);

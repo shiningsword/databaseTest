@@ -21,8 +21,9 @@ namespace DatabaseTW.Models
         public int CloseToZipcode { get; set; }
 
         public string CompanyDomain { get; set; }
-        //[ForeignKey("UserId")]
-        //public virtual ApplicationUser User { get; set; }
+
+        [ForeignKey("UserId")]
+        public virtual UserInfo User { get; set; }
     }
 
     public enum ExchangeRateMode
