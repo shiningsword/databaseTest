@@ -4,91 +4,157 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Requests</h2>
+<div class="row">
+    <div class="col-md-10">
+        <p>
+            @Html.ActionLink("Create New", "Create") |
+            @if (ViewBag.myRequests)
+            {
+                @Html.ActionLink("View all Requests", "Index")
+            }
+            else
+            {
+                @Html.ActionLink("View My Requests", "MyRequests")
+            }
+        </p>
+        <table class="table">
+            <tr>
+                @*<th>
+                    @Html.DisplayNameFor(model => model.UserId)
+                </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.AmountMin)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AmountMax)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Currency)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ExpirationDate)
+                </th>
+                @*<th>
+                    @Html.DisplayNameFor(model => model.ExchangeMode)
+                </th>*@
+                @*<th>
+                    @Html.DisplayNameFor(model => model.NeedEscrow)
+                </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.CloseToZipcode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CompanyDomain)
+                </th>
 
-<p>
-    @Html.ActionLink("Create New", "Create") |
-@if(ViewBag.myRequests)
-{ 
-    @Html.ActionLink("View all Requests", "Index")
-}
-else
-{
-    @Html.ActionLink("View My Requests", "MyRequests")
-}
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.UserId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AmountMin)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AmountMax)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Currency)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ExpirationDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ExchangeMode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NeedEscrow)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Message)
-        </th>
-        <th></th>
-    </tr>
+                @*<th>
+                    @Html.DisplayNameFor(model => model.Message)
+                </th>*@
+                <th></th>
+            </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AmountMin)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AmountMax)
-        </td>
-        <th>
-            @Html.DisplayFor(modelItem => item.Currency)
-        </th>
-        <td>
-            @Html.DisplayFor(modelItem => item.ExpirationDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ExchangeMode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NeedEscrow)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Message)
-        </td>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.UserId)
+                    </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AmountMin)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AmountMax)
+                    </td>
+                    <th>
+                        @Html.DisplayFor(modelItem => item.Currency)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ExpirationDate)
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.ExchangeMode)
+                    </td>*@
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.NeedEscrow)
+                    </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CloseToZipcode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CompanyDomain)
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.Message)
+                    </td>*@
 
-        @if (ViewBag.currentUser == item.UserId){
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.RequestID }) |
-                @Html.ActionLink("Details", "Details", new { id=item.RequestID }) |
-                @Html.ActionLink("Close", "Close", new { id = item.RequestID }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.RequestID })
-            </td>
-        }
-        else
+                    @if (ViewBag.currentUser == item.UserId)
+                    {
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.RequestID }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.RequestID }) |
+                            @Html.ActionLink("Close", "Close", new { id = item.RequestID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.RequestID })
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.ActionLink("Details", "Details", new { id = item.RequestID }) |
+                        </td>
+                    }
+
+                </tr>
+            }
+
+        </table>
+    </div>
+    <div class="col-md-2">
+        @*<div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Filter Results</h3>
+            </div>*@
+        @using (Html.BeginForm("FilterResult", "Requests"))
         {
-            <td>
-                @Html.ActionLink("Details", "Details", new { id = item.RequestID }) |
-            </td>
-        }
-    
-    </tr>
-}
+            <h4>Filter Result</h4>
+            <hr />
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                @Html.LabelFor(model => model.First().Currency, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EnumDropDownListFor(model => model.First().Currency, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.First().Currency, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-</table>
+            <div class="form-group">
+                @Html.LabelFor(model => model.First().AmountMin, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.First().AmountMin, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.First().AmountMin, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.First().AmountMax, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.First().AmountMax, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.First().AmountMax, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.First().CloseToZipcode, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.First().CloseToZipcode, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.First().CloseToZipcode, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Apply" class="btn btn-default" />
+                </div>
+            </div>
+        }
+        @*</div>*@
+    </div>
+</div>

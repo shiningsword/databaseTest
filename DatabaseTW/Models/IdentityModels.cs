@@ -40,6 +40,5 @@ namespace DatabaseTW.Models
         public System.Data.Entity.DbSet<DatabaseTW.Models.Request> Requests { get; set; }
 
         public System.Data.Entity.DbSet<DatabaseTW.Models.Transaction> Transactions { get; set; }
-
      }
 }

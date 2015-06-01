@@ -22,8 +22,8 @@ namespace DatabaseTW.Controllers
             {
                 RedirectToAction("LogOff", "AccountController");
             }
-            var myTransactions = db.Transactions.Where(r => (r.RecipientUserId == id ||
-                r.SenderUserId == id));
+            var myTransactions = db.Transactions.Where(r => (r.RecipientUserId == (string)id ||
+                r.SenderUserId == (string)id));
             return View(myTransactions.ToList());
         }
 

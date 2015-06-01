@@ -20,8 +20,9 @@ namespace DatabaseTW.Controllers
             var id = Session["userID"];
             if (id == null)
             {
-                return RedirectToAction("LogOff", "AccountController");
+                return RedirectToAction("Login", "AccountController");
             }
+            Request dummyRequest = new Request();
             ViewBag.currentUser = (string)id;
             ViewBag.myRequests = false;
             //var requests = db.Requests.Where(r => r.UserId ==);
@@ -34,11 +35,12 @@ namespace DatabaseTW.Controllers
             var id = Session["userID"];
             if (id == null)
             {
-                return RedirectToAction("LogOff", "AccountController");
+                return RedirectToAction("Login", "AccountController");
             }
-            ViewBag.currentUser = (string)id;
+             ViewBag.currentUser = (string)id;
             ViewBag.myRequests = true;
-            var requests = db.Requests.Where(r => r.UserId == id);
+
+            var requests = db.Requests.Where(r => r.UserId == (string)id);
             return View("Index", requests);
         }
 
@@ -62,8 +64,9 @@ namespace DatabaseTW.Controllers
         {
             if (Session["userID"] == null)
             {
-                return RedirectToAction("LogOff", "AccountController");
+                return RedirectToAction("Login", "AccountController");
             }
+
             return View();
         }
 
@@ -72,19 +75,42 @@ namespace DatabaseTW.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "RequestID,Message,AmountMin,AmountMax,Currency,ExpirationDate,ExchangeMode,NeedEscrow")] Request request)
+        public ActionResult Create([Bind(Include = "RequestID,Message,AmountMin,AmountMax,Currency,ExpirationDate,ExchangeMode,NeedEscrow, CloseToZipcode, CompanyDomain")] Request request)
         {
             if (ModelState.IsValid)
             {
                 var userId = Session["userID"];
                 if (userId == null)
                 {
-                    return RedirectToAction("LogOff", "AccountController");
+                    return RedirectToAction("Login", "AccountController");
                 }
                 request.UserId = (string)userId;
                 db.Requests.Add(request);
                 db.SaveChanges();
                 return RedirectToAction("Index");
+            }
+
+            return View(request);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult FilterResult([Bind(Include = "Currency, AmountMin,AmountMax, CloseToZipcode, CompanyDomain")] Request request)
+        {
+            if (ModelState.IsValid)
+            {
+                var userId = Session["userID"];
+                if (userId == null)
+                {
+                    return RedirectToAction("Login", "AccountController");
+                }
+                var result = db.Requests.Where(r => 
+                    r.Currency == request.Currency &&
+                    !(r.AmountMax < request.AmountMin || r.AmountMin > request.AmountMax));
+                
+                ViewBag.myRequests = false;
+                ViewBag.currentUser = (string)userId;
+                return View("Index", result);
             }
 
             return View(request);
