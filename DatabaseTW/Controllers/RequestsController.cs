@@ -41,7 +41,7 @@ namespace DatabaseTW.Controllers
             ViewBag.myRequests = true;
 
             var requests = db.Requests.Where(r => r.UserId == (string)id);
-            return View("Index", requests);
+            return View("Index", requests.ToList());
         }
 
         // GET: Requests/Details/5
@@ -118,7 +118,7 @@ namespace DatabaseTW.Controllers
 
                 ViewBag.myRequests = false;
                 ViewBag.currentUser = (string)userId;
-                return View("Index", query);
+                return View("Index", query.ToList());
             }
 
             return View(request);
