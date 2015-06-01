@@ -109,7 +109,7 @@ namespace DatabaseTW.Controllers
                     !(r.AmountMax < request.AmountMin || r.AmountMin > request.AmountMax));
                 if(request.CompanyDomain != null)
                 {
-                    query = query.Where(r => r.UserId.IndexOf(request.CompanyDomain, StringComparison.OrdinalIgnoreCase) != 0);
+                    query = query.Where(r => r.UserId.Contains(request.CompanyDomain));
                 }
                 if (request.CloseToZipcode != 0)
                 {
