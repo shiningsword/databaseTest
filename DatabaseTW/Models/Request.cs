@@ -6,6 +6,22 @@ using System.Web;
 
 namespace DatabaseTW.Models
 {
+    public class RequestViewModel
+    {
+        public List<Request> Requests {get;set;}
+        public Request Query { get; set; }
+        public RequestViewModel(List<Request> reqList, Request req)
+        {
+            Requests = reqList;
+            Query = req;
+        }
+
+        public RequestViewModel(List<Request> list)
+        {
+            this.Query = new Request();
+            this.Requests = list;
+        }
+    }
     public class Request
     {
         public int RequestID { get; set; }

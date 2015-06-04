@@ -22,11 +22,11 @@ namespace DatabaseTW.Controllers
             {
                 return RedirectToAction("Login", "AccountController");
             }
-            Request dummyRequest = new Request();
             ViewBag.currentUser = (string)id;
             ViewBag.myRequests = false;
             //var requests = db.Requests.Where(r => r.UserId ==);
-            return View(db.Requests.ToList());
+            RequestViewModel model = new RequestViewModel(db.Requests.ToList());
+            return View(model);
         }
 
         // GET: Requests
@@ -40,9 +40,9 @@ namespace DatabaseTW.Controllers
              ViewBag.currentUser = (string)id;
             ViewBag.myRequests = true;
 
-            //var requests = db.Requests.Where(r => r.UserId == (string)id);
-            //return View("Index", requests.ToList());
-            return View("Index", db.UserInfo.Find(id).requests);
+            RequestViewModel model = new RequestViewModel( db.UserInfo.Find(id).requests);
+ 
+            return View("Index", model);
         }
 
         // GET: Requests/Details/5
@@ -96,8 +96,17 @@ namespace DatabaseTW.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult FilterResult([Bind(Include = "Currency, AmountMin,AmountMax, CloseToZipcode, CompanyDomain")] Request request)
+        public ActionResult FilterResult(
+            FormCollection collection)
+ //         [Bind(Include = "Query.Currency, Query.AmountMin,Query.AmountMax, Query.CloseToZipcode, Query.CompanyDomain")] Request request)
         {
+            Request request = new Request();
+            request.AmountMax = double.Parse(collection["Query.AmountMax"]);
+            request.AmountMin = double.Parse(collection["Query.AmountMin"]);
+            request.CloseToZipcode = int.Parse(collection["Query.CloseToZipcode"]);
+            request.Currency = (CurrencyType)Enum.Parse(typeof(CurrencyType),collection["Query.Currency"]);
+            request.CompanyDomain = collection["Query.CompanyDomain"];
+            
             if (ModelState.IsValid)
             {
                 var userId = Session["userID"];
@@ -119,8 +128,8 @@ namespace DatabaseTW.Controllers
 
                 ViewBag.myRequests = false;
                 ViewBag.currentUser = (string)userId;
-                ViewBag.filterRequest = new Request();
-                return View("Index", query.ToList());
+                RequestViewModel model = new RequestViewModel(query.ToList(), request);
+                return View("Index", model);
             }
 
             return View(request);
